@@ -8,7 +8,7 @@ import 'dart:io';
 
 final levelColors = {
   Level.verbose: AnsiColor.fg(AnsiColor.grey(0.5)),
-  Level.debug: stdout.hasTerminal ? AnsiColor.none() : AnsiColor.fg(7),
+  Level.debug: AnsiColor.fg(7),
   Level.info: AnsiColor.fg(12), //12
   Level.warning: AnsiColor.fg(208),
   Level.error: AnsiColor.fg(196),
@@ -24,9 +24,13 @@ final levelEmojis = {
   Level.wtf: '😱 ',
 };
 
-final cols = stdout.hasTerminal ? stdout.terminalColumns : 180;
-
 void printer(Log log) {
+  int cols;
+  try {
+    cols = stdout.terminalColumns;
+  } catch (e) {
+    cols = 180;
+  }
   final step = cols ~/ 5;
   var line = levelEmojis[log.level]!;
   line += log.msg;
@@ -38,12 +42,13 @@ void printer(Log log) {
   final length = line.lineLength;
   line = levelColors[log.level]!.call(line);
 
-  if (stdout.hasTerminal) {
+  // if (stdout.hasTerminal) {
+  try {
     line += ' ' * (cols - length - log.file.length - 1);
     line += AnsiColor.fg(AnsiColor.grey(1.5)).call(log.file.split(' ')[0]);
     line += ' ';
     line += AnsiColor.fg(AnsiColor.grey(0.5)).call(log.file.split(' ')[1]);
-  } else {
+  } catch (e) {
     line += log.source;
   }
 

@@ -2,17 +2,19 @@ import 'dart:async';
 
 import 'level.dart';
 import 'log.dart';
+import 'printer.dart';
 
 class Logger {
   static final Logger _mylog = Logger._internal();
 
   Logger._internal();
 
-  factory Logger() {
+  factory Logger({Function? p}) {
+    _mylog._registerPrinter(p ?? printer);
     return _mylog;
   }
 
-  final _logStream = StreamController<Log>();
+  final StreamController<Log> _logStream = StreamController<Log>();
   Level level = Level.verbose;
 
   void v(String msg, [Error? error, StackTrace? trace]) {
@@ -76,7 +78,7 @@ class Logger {
   }
 
   /// Only one package can register a printer
-  void registerPrinter(Function printer) {
+  void _registerPrinter(Function printer) {
     _logStream.stream.forEach((element) => printer(element));
   }
 }
