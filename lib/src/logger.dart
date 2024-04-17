@@ -79,6 +79,7 @@ class Logger {
 
   /// Only one package can register a printer
   void _registerPrinter(Function printer) {
+    if (_logStream.hasListener) return;
     _logStream.stream.forEach((element) => printer(element));
   }
 }
