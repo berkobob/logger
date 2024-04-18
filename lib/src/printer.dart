@@ -27,9 +27,9 @@ final levelEmojis = {
 void printer(Log log) {
   int cols;
   try {
-    cols = stdout.terminalColumns;
+    cols = stdout.terminalColumns - 10;
   } catch (e) {
-    cols = 180;
+    cols = 170;
   }
   final step = cols ~/ 5;
   var line = levelEmojis[log.level]!;
