@@ -25,6 +25,7 @@ final levelEmojis = {
 };
 
 void graphicPrinter(Log log) {
+  print('│');
   stdout.write('├─ ${levelEmojis[log.level]}');
   print('─' * 71);
   print('│ ${levelColors[log.level]!.call(log.msg)}');

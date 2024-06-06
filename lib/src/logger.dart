@@ -9,7 +9,7 @@ class Logger {
 
   Logger._internal();
 
-  factory Logger({Function? p}) {
+  factory Logger([Function? p]) {
     _mylog._registerPrinter(p ?? printer);
     return _mylog;
   }
