@@ -25,14 +25,17 @@ final levelEmojis = {
 };
 
 void graphicPrinter(Log log) {
-  print('│');
+  stdout.write('│\n');
   stdout.write('├─ ${levelEmojis[log.level]}');
-  print('─' * 71);
-  print('│ ${levelColors[log.level]!.call(log.msg)}');
-  if (log.error != '') print('│ ${levelColors[log.level]!.call(log.error)}');
+  stdout.write('─' * 71);
+  stdout.write('\n│ ${levelColors[log.level]!.call(log.msg)}\n');
+  if (log.error != '') {
+    stdout.write('│ ${levelColors[log.level]!.call(log.error)}\n');
+  }
   stdout.write(
       '│ ${AnsiColor.fg(AnsiColor.grey(1.5)).call(log.file.split(' ')[0])}');
-  print(': ${AnsiColor.fg(AnsiColor.grey(0.5)).call(log.file.split(' ')[1])}');
+  stdout.write(
+      ': ${AnsiColor.fg(AnsiColor.grey(0.5)).call(log.file.split(' ')[1])}\n');
   // print('│ ${log.source}');
   // print('┌');
   // print('─' * 80);
